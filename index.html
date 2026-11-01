@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ARCHIVO 0x3F</title>
+<style>
+  html, body {
+    margin: 0;
+    height: 100%;
+    background: #000;
+    color: #bdbdbd;
+    font-family: "Courier New", Courier, monospace;
+    overflow: hidden;
+  }
+  canvas#static {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.07;
+    pointer-events: none;
+  }
+  .scan {
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(to bottom, rgba(255,255,255,0.03) 0 1px, transparent 1px 3px);
+    pointer-events: none;
+  }
+  main {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  h1 {
+    font-size: 1.1rem;
+    letter-spacing: 0.4em;
+    font-weight: normal;
+    margin: 0;
+    animation: flick 5s infinite;
+  }
+  p {
+    margin: 0;
+    font-size: 0.8rem;
+    opacity: 0.5;
+    line-height: 1.8;
+  }
+  #t {
+    font-size: 0.7rem;
+    opacity: 0.35;
+    font-variant-numeric: tabular-nums;
+  }
+  a.btn {
+    color: #bdbdbd;
+    text-decoration: none;
+    border: 1px solid #444;
+    padding: 10px 24px;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+  }
+  a.btn:hover {
+    background: #bdbdbd;
+    color: #000;
+  }
+  .menu-toggle {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 5;
+    width: 48px;
+    height: 48px;
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    gap: 6px;
+    padding: 0;
+    border: 1px solid #444;
+    background: #000;
+    cursor: pointer;
+  }
+  .menu-toggle span {
+    width: 20px;
+    height: 1px;
+    background: #bdbdbd;
+    transition: transform 180ms ease, opacity 180ms ease;
+  }
+  .menu-toggle.is-open span:first-child {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .menu-toggle.is-open span:nth-child(2) {
+    opacity: 0;
+  }
+  .menu-toggle.is-open span:last-child {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+  .footer-logo {
+    position: fixed;
+    left: 50%;
+    bottom: 12px;
+    z-index: 4;
+    width: 52px;
+    height: 52px;
+    object-fit: contain;
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+  .space-view {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    gap: 20px;
+    padding: 24px;
+    box-sizing: border-box;
+    background: #000;
+    text-align: center;
+  }
+  .space-view h2 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: normal;
+    letter-spacing: 0.3em;
+  }
+  .space-open .footer-logo {
+    display: none;
+  }
+  .image-stage {
+    position: relative;
+    display: grid;
+    place-items: center;
+  }
+  .large-image {
+    display: block;
+    height: min(88vh, 840px);
+    max-width: 90vw;
+    object-fit: contain;
+  }
+  .close-message {
+    position: absolute;
+    top: 8%;
+    left: 50%;
+    z-index: 1;
+    color: #ff2020;
+    font-size: 1.2rem;
+    font-weight: bold;
+    letter-spacing: 0.15em;
+    text-shadow: 0 0 8px #f00;
+    transform: translateX(-50%);
+    animation: close-flicker 8s steps(1, end) infinite;
+  }
+  main[hidden], .space-view[hidden] {
+    display: none;
+  }
+  @keyframes flick {
+    0%, 19%, 21%, 60%, 62%, 100% { opacity: 1; }
+    20%, 61% { opacity: 0.2; }
+  }
+  @keyframes close-flicker {
+    0%, 5%, 77%, 79%, 86%, 88% { opacity: 1; }
+    6%, 76%, 80%, 85%, 89%, 100% { opacity: 0; }
+  }
+</style>
+</head>
+<body>
+<canvas id="static"></canvas>
+<div class="scan"></div>
+<button class="menu-toggle" id="menu-toggle" type="button" aria-label="Abrir espacio" aria-expanded="false" aria-controls="other-space">
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
+<img class="footer-logo" src="face.jpeg" alt="Logo 954" width="52" height="52">
+<audio id="background-audio" src="Fundo Tema de Terror (slow+echo).mp3" loop preload="auto"></audio>
+<audio id="open-sound" src="ٹھیک اے ماں۔.mp3" preload="auto"></audio>
+
+<main>
+  <h1 id="title">954 کھلا</h1>
+  <p>ਮੈمیں تینوں پیار کردا ہاں دادی<br>پر توں ایہہ کیوں کیتا؟</p>
+  <a class="btn" href="شاید ایہ تہانوں مار دیوے۔.zip" download>مینوں کھولو</a>
+  <p id="warn" style="opacity:0;">DONT CLOSE THIS PAGE</p>
+</main>
+<section class="space-view" id="other-space" aria-label="Imagen a pantalla grande" hidden>
+  <div class="image-stage">
+    <img class="huge-image" src="grande.jpeg" alt="Imagen del archivo">
+    <p class="close-message" aria-hidden="true">IM CLOSE</p>
+  </div>
+</section>
+
+<script>
+  const backgroundAudio = document.getElementById("background-audio");
+  backgroundAudio.volume = 0.25;
+  function startBackgroundAudio() {
+    backgroundAudio.play().then(() => {
+      document.removeEventListener("pointerdown", startBackgroundAudio);
+      document.removeEventListener("keydown", startBackgroundAudio);
+    }).catch(() => {});
+  }
+  document.addEventListener("pointerdown", startBackgroundAudio);
+  document.addEventListener("keydown", startBackgroundAudio);
+
+  const menuToggle = document.getElementById("menu-toggle");
+  const mainView = document.querySelector("main");
+  const otherSpace = document.getElementById("other-space");
+  const openSound = document.getElementById("open-sound");
+  openSound.volume = 0.8;
+  menuToggle.addEventListener("click", () => {
+    const isOpen = otherSpace.hidden;
+    otherSpace.hidden = !isOpen;
+    mainView.hidden = isOpen;
+    if (isOpen) {
+      openSound.currentTime = 0;
+      openSound.play().catch(() => {});
+    } else {
+      openSound.pause();
+      openSound.currentTime = 0;
+    }
+    document.body.classList.toggle("space-open", isOpen);
+    menuToggle.classList.toggle("is-open", isOpen);
+    menuToggle.setAttribute("aria-expanded", String(isOpen));
+    menuToggle.setAttribute("aria-label", isOpen ? "Cerrar espacio" : "Abrir espacio");
+  });
+
+  // Ruido de fondo
+  const c = document.getElementById("static");
+  const ctx = c.getContext("2d");
+  function resize() {
+    c.width = Math.floor(innerWidth / 3);
+    c.height = Math.floor(innerHeight / 3);
+  }
+  resize();
+  addEventListener("resize", resize);
+  (function noise() {
+    const img = ctx.createImageData(c.width, c.height);
+    for (let i = 0; i < img.data.length; i += 4) {
+      const v = Math.random() * 255;
+      img.data[i] = img.data[i + 1] = img.data[i + 2] = v;
+      img.data[i + 3] = 255;
+    }
+    ctx.putImageData(img, 0, 0);
+    setTimeout(() => requestAnimationFrame(noise), 60);
+  })();
+
+  // Cronómetro que nadie inició
+  const t = document.getElementById("t");
+  const start = Date.now();
+  if (t) {
+    setInterval(() => {
+      const s = Math.floor((Date.now() - start) / 1000);
+      const h = String(Math.floor(s / 3600)).padStart(2, "0");
+      const m = String(Math.floor((s % 3600) / 60)).padStart(2, "0");
+      const sec = String(s % 60).padStart(2, "0");
+      t.textContent = `${h}:${m}:${sec}`;
+    }, 1000);
+  }
+
+  // Glitches del título
+  const title = document.getElementById("title");
+  const original = title.textContent;
+  setInterval(() => {
+    if (Math.random() < 0.25) {
+      const chars = original.split("");
+      const i = Math.floor(Math.random() * chars.length);
+      if (chars[i] !== " ") chars[i] = "█";
+      title.textContent = chars.join("");
+      setTimeout(() => title.textContent = original, 120);
+    }
+  }, 2000);
+
+  // Aviso tardío
+  setTimeout(() => {
+    document.getElementById("warn").style.transition = "opacity 3s";
+    document.getElementById("warn").style.opacity = "0.6";
+  }, 25000);
+</script>
+</body>
+</html>
