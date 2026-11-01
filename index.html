@@ -179,7 +179,7 @@
   <span></span>
 </button>
 <img class="footer-logo" src="face.jpeg" alt="Logo 954" width="52" height="52">
-<audio id="background-audio" src="Fundo Tema de Terror (slow+echo).mp3" loop preload="auto"></audio>
+<audio id="background-audio" src="Fundo Tema de Terror (slow+echo).mp3" autoplay loop preload="auto"></audio>
 <audio id="open-sound" src="ٹھیک اے ماں۔.mp3" preload="auto"></audio>
 
 <main>
@@ -206,6 +206,7 @@
   }
   document.addEventListener("pointerdown", startBackgroundAudio);
   document.addEventListener("keydown", startBackgroundAudio);
+  startBackgroundAudio();
 
   const menuToggle = document.getElementById("menu-toggle");
   const mainView = document.querySelector("main");
